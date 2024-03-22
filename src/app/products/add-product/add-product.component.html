@@ -1,0 +1,41 @@
+<h1>Create New Product</h1>
+<form>
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input required matInput placeholder="Enter product name">
+    </mat-form-field>
+
+    <div class="col-2">
+        <mat-form-field floatLabel="always" style="flex-basis: 70%;">
+            <mat-label>Price</mat-label>
+            <input required matInput type="number" step="100" placeholder="0">
+            <span matTextPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field floatLabel="always" style="flex-basis: 30%;">
+            <mat-label>Discount</mat-label>
+            <input matInput type="number" step="5" placeholder="0">
+            <span matTextPrefix>%&nbsp;</span>
+        </mat-form-field>
+    </div>
+
+    <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select required>
+            <mat-option value="1">Electronics</mat-option>
+            <mat-option value="2">Sport</mat-option>
+            <mat-option value="3">Fashion</mat-option>
+            <mat-option value="4">Home & Garden</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+
+    <mat-checkbox color="primary">In Stock</mat-checkbox>
+
+    <div class="buttons-block">
+        <button mat-raised-button>Cancel</button>
+        <button mat-raised-button color="accent">Create</button>
+    </div>
+</form>

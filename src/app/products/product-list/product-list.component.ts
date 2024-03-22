@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { ProductModel } from '../services/products';
-import { ProductsService } from '../services/products.service';
+import { ProductModel } from '../../services/products';
+import { ProductsService } from '../../services/products.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import {
