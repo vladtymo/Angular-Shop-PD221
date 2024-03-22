@@ -15,4 +15,11 @@ export class ProductsService {
   getAll(): Observable<ProductResponseModel> {
     return this.http.get<ProductResponseModel>(api);
   }
+
+  // TODO: refactor api path
+  delete(id: number): void {
+    console.log("Deleting product id: " + id);
+    // TODO: handle bad result
+    //this.http.delete(api + "/" + id);
+  }
 }
