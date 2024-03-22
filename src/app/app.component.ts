@@ -10,7 +10,12 @@ import { AddProductComponent } from "./products/add-product/add-product.componen
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, ProductListComponent, AddProductComponent]
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    ProductListComponent,
+    AddProductComponent]
 })
 export class AppComponent {
 
