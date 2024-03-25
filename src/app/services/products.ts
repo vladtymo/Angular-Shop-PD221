@@ -1,9 +1,10 @@
 export interface ProductModel {
     id: number;
-    name: string;
+    title: string;
     categoryId: number;
-    discount: number;
+    discountPercentage: number;
     price: number;
+    description: string;
 }
 
 export interface ProductResponseModel {

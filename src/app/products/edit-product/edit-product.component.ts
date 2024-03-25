@@ -55,12 +55,12 @@ export class EditProductComponent implements OnInit {
       this.product = res;
 
       this.form.setValue({
-        name: res.name,
+        name: res.title,
         price: res.price,
-        discount: res.discount,
+        discount: res.discountPercentage,
         inStock: false,
-        categoryId: res.categoryId,
-        description: ""
+        categoryId: 3,
+        description: res.description
       });
     });
   }

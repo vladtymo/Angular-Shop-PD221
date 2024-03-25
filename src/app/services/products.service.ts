@@ -28,7 +28,7 @@ export class ProductsService {
   }
 
   edit(model: ProductModel): Observable<any> | null {
-    console.log(`Editing the ${model.name} product...`);
+    console.log(`Editing the ${model.title} product...`);
     //return this.http.put<ProductModel>(api, model);
     return null;
   }
