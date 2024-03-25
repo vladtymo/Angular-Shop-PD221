@@ -12,6 +12,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { RemoveProductDialogComponent } from '../remove-product-dialog/remove-product-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -25,7 +26,8 @@ export class ProductListComponent implements OnInit {
   dataSource: ProductModel[] = [];
 
   constructor(private productsService: ProductsService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit(): void {
     // get data from the server
@@ -36,6 +38,10 @@ export class ProductListComponent implements OnInit {
     this.openDeleteDialog().afterClosed().subscribe(res => {
       if (res === true) this.productsService.delete(id);
     });
+  }
+
+  editHandler(id: number): void {
+    this.router.navigate(['/edit-product', id]);
   }
 
   openDeleteDialog() {

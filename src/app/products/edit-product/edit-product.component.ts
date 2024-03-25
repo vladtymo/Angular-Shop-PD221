@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabelType, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,10 +9,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-add-product',
+  selector: 'app-edit-product',
   standalone: true,
   imports: [
     FormsModule,
@@ -25,11 +27,10 @@ import { ProductsService } from '../../services/products.service';
     MatIconModule,
     MatButtonModule
   ],
-  templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css'
+  templateUrl: './edit-product.component.html',
+  styleUrl: './edit-product.component.css'
 })
-export class AddProductComponent {
-
+export class EditProductComponent implements OnInit {
   form = this.fb.group({
     name: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
@@ -39,7 +40,34 @@ export class AddProductComponent {
     description: ['', Validators.maxLength(3000)]
   });
 
-  constructor(private fb: FormBuilder, private service: ProductsService) { }
+  id: number = 0;
+  product: ProductModel | null = null;
+
+  constructor(private fb: FormBuilder,
+    private service: ProductsService,
+    private location: Location,
+    private route: ActivatedRoute
+  ) { }
+
+  ngOnInit(): void {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id') ?? "0");
+    this.service.get(this.id).subscribe(res => {
+      this.product = res;
+
+      this.form.setValue({
+        name: res.name,
+        price: res.price,
+        discount: res.discount,
+        inStock: false,
+        categoryId: res.categoryId,
+        description: ""
+      });
+    });
+  }
+
+  back(): void {
+    this.location.back();
+  }
 
   submit(): void {
 
@@ -49,6 +77,6 @@ export class AddProductComponent {
     }
 
     const item: ProductModel = this.form.value as ProductModel;
-    this.service.create(item);
+    this.service.edit(item);
   }
 }

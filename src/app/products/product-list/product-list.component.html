@@ -34,7 +34,7 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary">
+                <button (click)="editHandler(element.id)" mat-icon-button color="primary">
                     <mat-icon>edit</mat-icon>
                 </button>
                 <button (click)="deleteHandler(element.id)" mat-icon-button color="primary">
