@@ -16,6 +16,13 @@ export class ProductsService {
     return this.http.get<ProductResponseModel>(api);
   }
 
+  create(model: ProductModel): Observable<any> | null {
+
+    console.log("Creating new product...", model);
+    //return this.http.post<ProductModel>(api, model);
+    return null;
+  }
+
   // TODO: refactor api path
   delete(id: number): void {
     console.log("Deleting product id: " + id);
