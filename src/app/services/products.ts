@@ -17,7 +17,7 @@ export interface CategoryModel {
 
 export interface CreateProductModel {
     name: string;
-    categoryId: number;
+    categoryId: number | null;
     discount: number;
     price: number;
     description: string | null;

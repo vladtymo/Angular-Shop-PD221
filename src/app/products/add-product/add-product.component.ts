@@ -35,7 +35,7 @@ export class AddProductComponent implements OnInit {
     price: [0, [Validators.required, Validators.min(0)]],
     discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     inStock: [false, Validators.required],
-    categoryId: [0, Validators.required],
+    categoryId: [null, Validators.required],
     description: ['', Validators.maxLength(3000)],
     image: [null, Validators.required]
   });
