@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { ProductModel } from '../../services/products';
+import { CategoryModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -45,6 +45,7 @@ export class EditProductComponent implements OnInit {
 
   id: number = 0;
   product: ProductModel | null = null;
+  categories: CategoryModel[] = [];
 
   constructor(private fb: FormBuilder,
     private service: ProductsService,
@@ -54,6 +55,8 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
+
+    this.service.getCategories().subscribe(res => this.categories = res);
 
     this.service.get(this.id).subscribe(res => {
       this.product = res;

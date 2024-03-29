@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CreateProductModel, ProductModel, ProductResponseModel } from './products';
+import { CategoryModel, CreateProductModel, ProductModel, ProductResponseModel } from './products';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,10 @@ export class ProductsService {
 
   getAll(): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.basePath);
+  }
+
+  getCategories(): Observable<CategoryModel[]> {
+    return this.http.get<CategoryModel[]>(this.basePath + "categories");
   }
 
   get(id: number): Observable<ProductModel> {

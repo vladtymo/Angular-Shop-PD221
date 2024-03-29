@@ -23,7 +23,7 @@
         </mat-form-field>
     </div>
 
-    <mat-form-field>
+    <!-- <mat-form-field>
         <mat-label>Category</mat-label>
         <mat-select formControlName="categoryId" required>
             <mat-option value="1">Electronics</mat-option>
@@ -31,7 +31,19 @@
             <mat-option value="3">Fashion</mat-option>
             <mat-option value="4">Home & Garden</mat-option>
         </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId">
+            @for (i of categories; track i.id) {
+            <mat-option [value]="i.id">
+                {{i.name}}
+            </mat-option>
+            }
+        </mat-select>
     </mat-form-field>
+
     <mat-form-field>
         <mat-label>Description</mat-label>
         <textarea formControlName="description" matInput></textarea>

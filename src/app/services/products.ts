@@ -10,6 +10,11 @@ export interface ProductModel {
     imageUrl: string;
 }
 
+export interface CategoryModel {
+    id: number;
+    name: string;
+}
+
 export interface CreateProductModel {
     name: string;
     categoryId: number;
