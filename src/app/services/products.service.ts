@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ProductModel, ProductResponseModel } from './products';
+import { CreateProductModel, ProductModel, ProductResponseModel } from './products';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -25,16 +25,20 @@ export class ProductsService {
     return this.http.get<ProductModel>(this.basePath + id);
   }
 
-  create(model: ProductModel): Observable<any> {
+  create(model: CreateProductModel): Observable<any> {
     console.log("Creating new product...", model);
 
     const formData = new FormData();
-    Object.entries(model).forEach(([key, value]) => {
+    // Object.entries(model).forEach(([key, value]) => {
+    //   formData.append(key, value);
+    // });
+
+    for (const key in model) {
+      const value = model[key as keyof CreateProductModel] as string | Blob;
       formData.append(key, value);
-    });
+    }
 
     const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
-
     return this.http.post(this.basePath, formData, { headers: headers });
 
     //return this.http.post<ProductModel>(this.basePath, model);

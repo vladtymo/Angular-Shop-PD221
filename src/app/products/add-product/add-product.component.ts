@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { ProductModel } from '../../services/products';
+import { CreateProductModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 
 
@@ -49,7 +49,7 @@ export class AddProductComponent {
       return;
     }
 
-    const item: ProductModel = this.form.value as ProductModel;
+    const item: CreateProductModel = this.form.value as CreateProductModel;
     this.service.create(item).subscribe(res => {
       console.log(res);
     });
