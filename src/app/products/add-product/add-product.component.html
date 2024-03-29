@@ -32,6 +32,11 @@
         <textarea formControlName="description" matInput></textarea>
     </mat-form-field>
 
+    <div>
+        <label>Image: </label>
+        <input type="file" #filePicker (change)="onImagePicked($event)" required placeholder="Enter image URL">
+    </div>
+
     <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
 
     <div class="buttons-block">

@@ -36,7 +36,8 @@ export class AddProductComponent {
     discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     inStock: [false, Validators.required],
     categoryId: [0, Validators.required],
-    description: ['', Validators.maxLength(3000)]
+    description: ['', Validators.maxLength(3000)],
+    image: [null, Validators.required]
   });
 
   constructor(private fb: FormBuilder, private service: ProductsService) { }
@@ -49,6 +50,14 @@ export class AddProductComponent {
     }
 
     const item: ProductModel = this.form.value as ProductModel;
-    this.service.create(item);
+    this.service.create(item).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  onImagePicked(event: any) {
+    //const target = (event.target as HTMLInputElement);
+    const file = event.target.files[0]; // Here we use only the first file (single file)
+    this.form.patchValue({ image: file });
   }
 }

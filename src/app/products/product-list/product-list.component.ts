@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import {
 } from '@angular/material/dialog';
 import { RemoveProductDialogComponent } from '../remove-product-dialog/remove-product-dialog.component';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -22,8 +23,9 @@ import { Router } from '@angular/router';
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'price', 'rating', 'actions'];
-  dataSource: ProductModel[] = [];
+  displayedColumns: string[] = ['image', 'id', 'name', 'price', 'rating', 'actions'];
+  products: ProductModel[] = [];
+  tableSource = new MatTableDataSource<ProductModel>([]);
 
   constructor(private productsService: ProductsService,
     public dialog: MatDialog,
@@ -31,12 +33,21 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit(): void {
     // get data from the server
-    this.productsService.getAll().subscribe(res => this.dataSource = res.products);
+    this.productsService.getAll().subscribe(res => {
+      this.products = res;
+      this.updateTableSource();
+    });
   }
 
-  deleteHandler(id: number): void {
-    this.openDeleteDialog().afterClosed().subscribe(res => {
-      if (res === true) this.productsService.delete(id);
+  deleteHandler(id: number) {
+    this.openDeleteDialog().afterClosed().subscribe(async res => {
+      if (res === true) {
+        await lastValueFrom(this.productsService.delete(id));
+        // TODO: show alert
+        const index = this.products.findIndex(x => x.id === id);
+        this.products.splice(index, 1);
+        this.updateTableSource();
+      }
     });
   }
 
@@ -46,5 +57,9 @@ export class ProductListComponent implements OnInit {
 
   openDeleteDialog() {
     return this.dialog.open(RemoveProductDialogComponent)
+  }
+
+  updateTableSource() {
+    this.tableSource.data = this.products;
   }
 }

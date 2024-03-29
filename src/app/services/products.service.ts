@@ -1,42 +1,55 @@
 import { Injectable } from '@angular/core';
 import { ProductModel, ProductResponseModel } from './products';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const api = "https://dummyjson.com/products";
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
 
-  constructor(private http: HttpClient) { }
+  //private readonly api = process.env;
+  basePath: string;
 
-  getAll(): Observable<ProductResponseModel> {
-    return this.http.get<ProductResponseModel>(api);
+  constructor(private http: HttpClient) {
+
+    this.basePath = "https://localhost:7206/api/"; //process.env["LOCAL_API"] ?? "";
+    this.basePath += "products/"
+  }
+
+  getAll(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.basePath);
   }
 
   get(id: number): Observable<ProductModel> {
-    return this.http.get<ProductModel>(api + "/" + id);
+    return this.http.get<ProductModel>(this.basePath + id);
   }
 
-  create(model: ProductModel): Observable<any> | null {
-
+  create(model: ProductModel): Observable<any> {
     console.log("Creating new product...", model);
-    //return this.http.post<ProductModel>(api, model);
-    return null;
+
+    const formData = new FormData();
+    Object.entries(model).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    const headers = new HttpHeaders({ 'enctype': 'multipart/form-data' });
+
+    return this.http.post(this.basePath, formData, { headers: headers });
+
+    //return this.http.post<ProductModel>(this.basePath, model);
   }
 
   edit(model: ProductModel): Observable<any> | null {
-    console.log(`Editing the ${model.title} product...`);
+    console.log(`Editing the ${model.name} product...`);
     //return this.http.put<ProductModel>(api, model);
     return null;
   }
 
   // TODO: refactor api path
-  delete(id: number): void {
+  delete(id: number): Observable<any> {
     console.log("Deleting product id: " + id);
     // TODO: handle bad result
-    //this.http.delete(api + "/" + id);
+    return this.http.delete(this.basePath + id);
   }
 }
