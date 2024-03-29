@@ -9,7 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { CreateProductModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-product',
@@ -40,7 +40,9 @@ export class AddProductComponent {
     image: [null, Validators.required]
   });
 
-  constructor(private fb: FormBuilder, private service: ProductsService) { }
+  constructor(private fb: FormBuilder,
+    private service: ProductsService,
+    private location: Location) { }
 
   submit(): void {
 
@@ -52,6 +54,8 @@ export class AddProductComponent {
     const item: CreateProductModel = this.form.value as CreateProductModel;
     this.service.create(item).subscribe(res => {
       console.log(res);
+
+      this.back();
     });
   }
 
@@ -59,5 +63,9 @@ export class AddProductComponent {
     //const target = (event.target as HTMLInputElement);
     const file = event.target.files[0]; // Here we use only the first file (single file)
     this.form.patchValue({ image: file });
+  }
+
+  back(): void {
+    this.location.back();
   }
 }

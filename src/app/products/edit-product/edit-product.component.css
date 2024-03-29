@@ -14,6 +14,11 @@ form .buttons-block {
     gap: 10px;
 }
 
+h1 button,
+h1 span {
+    vertical-align: middle;
+}
+
 /* input.example-right-align::-webkit-outer-spin-button,
 input.example-right-align::-webkit-inner-spin-button {
     display: none;

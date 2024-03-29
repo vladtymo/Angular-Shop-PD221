@@ -1,10 +1,9 @@
-<div>
+<h1>
     <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
         <mat-icon>arrow_back</mat-icon>
     </button>
-</div>
-
-<h1>Edit Product Information</h1>
+    <span>Edit Product Information</span>
+</h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <mat-form-field>
         <mat-label>Name</mat-label>

@@ -1,4 +1,9 @@
-<h1>Create New Product</h1>
+<h1>
+    <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Create New Product</span>
+</h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <mat-form-field>
         <mat-label>Name</mat-label>
