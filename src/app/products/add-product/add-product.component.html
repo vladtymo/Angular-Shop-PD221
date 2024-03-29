@@ -33,8 +33,11 @@
     </mat-form-field>
 
     <div>
-        <label>Image: </label>
-        <input type="file" #filePicker (change)="onImagePicked($event)" required placeholder="Enter image URL">
+        <button color="primary" type="button" mat-raised-button (click)="fileInput.click()">
+            <mat-icon aria-hidden="false" fontIcon="image"></mat-icon>
+            <span>Choose Image</span>
+        </button>
+        <input hidden (change)="onImagePicked($event)" #fileInput type="file" id="file">
     </div>
 
     <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
