@@ -5,6 +5,11 @@
     <span>Edit Product Information</span>
 </h1>
 <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="product-image">
+        <img height="200" src="{{product?.imageUrl}}" alt="{{product?.name}}">
+    </div>
+
     <mat-form-field>
         <mat-label>Name</mat-label>
         <input formControlName="name" required matInput placeholder="Enter product name">
@@ -40,7 +45,7 @@
     <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
 
     <div class="buttons-block">
-        <button type="reset" mat-raised-button>Cancel</button>
+        <button (click)="onCancel()" type="button" mat-raised-button>Cancel</button>
         <button type="submit" mat-raised-button color="accent">Edit</button>
     </div>
 </form>

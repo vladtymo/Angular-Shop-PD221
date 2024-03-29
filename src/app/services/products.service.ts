@@ -44,10 +44,9 @@ export class ProductsService {
     //return this.http.post<ProductModel>(this.basePath, model);
   }
 
-  edit(model: ProductModel): Observable<any> | null {
-    console.log(`Editing the ${model.name} product...`);
-    //return this.http.put<ProductModel>(api, model);
-    return null;
+  edit(model: ProductModel): Observable<any> {
+    console.log(`Editing product:`, model);
+    return this.http.put<ProductModel>(this.basePath, model);
   }
 
   // TODO: refactor api path

@@ -32,12 +32,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditProductComponent implements OnInit {
   form = this.fb.group({
+    id: [0, Validators.required],
     name: ['', Validators.required],
     price: [0, [Validators.required, Validators.min(0)]],
     discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
     inStock: [false, Validators.required],
     categoryId: [0, Validators.required],
-    description: ['', Validators.maxLength(3000)]
+    description: ['', Validators.maxLength(3000)],
+    imageUrl: ['', Validators.required],
+    categoryName: ['']
   });
 
   id: number = 0;
@@ -50,18 +53,11 @@ export class EditProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id') ?? "0");
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+
     this.service.get(this.id).subscribe(res => {
       this.product = res;
-
-      this.form.setValue({
-        name: res.name,
-        price: res.price,
-        discount: res.discount,
-        inStock: false,
-        categoryId: 3,
-        description: res.description
-      });
+      this.form.setValue(this.product);
     });
   }
 
@@ -77,6 +73,11 @@ export class EditProductComponent implements OnInit {
     }
 
     const item: ProductModel = this.form.value as ProductModel;
-    this.service.edit(item);
+    this.service.edit(item).subscribe(() => this.back());
+  }
+
+  onCancel() {
+    if (this.product)
+      this.form.setValue(this.product);
   }
 }
