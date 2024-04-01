@@ -1,0 +1,37 @@
+<h1>
+    <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Register</span>
+</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" required matInput placeholder="Enter your email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input formControlName="password" type="password" required matInput placeholder="Enter your password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input formControlName="confirmPassword" type="password" required matInput placeholder="Confirm your password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Phone Number</mat-label>
+        <input formControlName="phone" type="tel" matInput placeholder="Enter your phone">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Birthdate</mat-label>
+        <input formControlName="birthdate" required matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <div class="buttons-block">
+        <button type="submit" mat-raised-button color="accent">Register</button>
+        <button routerLink="/login" type="button" mat-raised-button>Login</button>
+    </div>
+</form>

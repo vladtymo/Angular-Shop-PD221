@@ -1,0 +1,20 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form .buttons-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.buttons-block>* {
+    width: 200px;
+}
+
+h1 button,
+h1 span {
+    vertical-align: middle;
+}

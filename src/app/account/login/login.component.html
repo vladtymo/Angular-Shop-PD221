@@ -1,0 +1,24 @@
+<h1>
+    <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>Login</span>
+</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="col-2">
+        <mat-form-field class="justify">
+            <mat-label>Email</mat-label>
+            <input type="email" formControlName="email" required matInput placeholder="Enter your email">
+        </mat-form-field>
+        <mat-form-field class="justify">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" required matInput placeholder="Enter your password">
+        </mat-form-field>
+    </div>
+
+    <div class="buttons-block">
+        <button type="submit" mat-raised-button color="accent">Login</button>
+        <button routerLink="/register" type="button" mat-raised-button>Register</button>
+    </div>
+</form>
