@@ -69,7 +69,7 @@ export class EditProductComponent implements OnInit {
   }
 
   submit(): void {
-
+    ``
     if (!this.form.valid) {
       alert("Invalid data, please try again!");
       return;

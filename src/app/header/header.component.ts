@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
+import { TokenService } from '../services/token.service';
 
 @Component({
   selector: 'app-header',
@@ -13,4 +14,7 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
 
+  constructor(public service: TokenService) {
+
+  }
 }
