@@ -14,6 +14,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoginModel, RegisterModel } from '../account';
 import { AccountsService } from '../../services/accounts.service';
 import { TokenService } from '../../services/token.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent {
   constructor(fb: FormBuilder,
     private service: AccountsService,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private tokenService: TokenService) {
     this.form = fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -63,7 +65,16 @@ export class LoginComponent {
 
       this.tokenService.saveToken(res.accessToken, res.refreshToken);
       this.router.navigate(['/']);
+
+      this.openSnackBar("You have logged in successfully!", 3)
     });
   }
 
+  openSnackBar(message: string, durationInM: number) {
+    this._snackBar.open(message, undefined, {
+      duration: durationInM * 1000,
+      // TODO: change snackbar styling
+      //panelClass: ['mat-toolbar', 'mat-accent']
+    });
+  }
 }
