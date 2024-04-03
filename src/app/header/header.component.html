@@ -10,10 +10,18 @@
         <mat-icon>add_circle</mat-icon>
     </button>
 
-    <span>{{service.getAccessToken()}}</span>
+    <!-- <span>{{service.getAccessToken()}}</span> -->
     <span class="spacer"></span>
 
+    @if(!accountService.isAuthenticated()) {
     <button mat-icon-button routerLink="/login">
         <mat-icon>login</mat-icon>
     </button>
+    }
+    @else {
+    <span>Hello, {{accountService.getCurrentUserEmail()}}</span>
+    <button mat-icon-button (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+    </button>
+    }
 </mat-toolbar>

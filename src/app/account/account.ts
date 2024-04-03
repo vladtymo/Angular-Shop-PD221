@@ -14,3 +14,13 @@ export interface LoginResponseModel {
     refreshToken: string;
     accessToken: string;
 }
+
+export interface LogoutModel {
+    refreshToken: string;
+}
+
+export interface IAccessTokenPayload {
+    id: string;
+    email: string;
+    dateOfBirth: Date;
+}
