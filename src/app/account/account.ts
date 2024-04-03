@@ -23,4 +23,5 @@ export interface IAccessTokenPayload {
     id: string;
     email: string;
     dateOfBirth: Date;
+    role: string | null;
 }

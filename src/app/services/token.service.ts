@@ -43,9 +43,10 @@ export class TokenService {
       const payload: any = jwtDecode(token);
 
       return {
-        email: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name' as keyof IAccessTokenPayload],
-        id: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier' as keyof IAccessTokenPayload],
-        dateOfBirth: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth' as keyof IAccessTokenPayload]
+        email: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+        id: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'],
+        dateOfBirth: payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/dateofbirth'],
+        role: payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
       };
 
     } catch (Error) {

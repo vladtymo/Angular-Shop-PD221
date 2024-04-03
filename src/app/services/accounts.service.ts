@@ -44,4 +44,8 @@ export class AccountsService {
   getCurrentUserEmail(): string | null {
     return this.tokenService.getAccessTokenPayload()?.email ?? null;
   }
+
+  getCurrentUserRole(): string | null {
+    return this.tokenService.getAccessTokenPayload()?.role ?? null;
+  }
 }
