@@ -1,52 +1,15 @@
-<h1>
-    <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Edit Product Information</span>
-</h1>
-<form [formGroup]="form" (ngSubmit)="submit()">
+<app-product-form (onSubmit)="edit($event)" [product]="product">
+    <ng-container title>
+        Edit Product Information
+    </ng-container>
+    <ng-container submitText>
+        Edit
+    </ng-container>
+    <ng-container imagePreview>
 
-    <div class="product-image">
-        <img height="200" src="{{product?.imageUrl}}" alt="{{product?.name}}">
-    </div>
+        <div class="product-image">
+            <img height="200" src="{{product?.imageUrl}}" alt="{{product?.name}}">
+        </div>
 
-    <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input formControlName="name" required matInput placeholder="Enter product name">
-    </mat-form-field>
-
-    <div class="col-2">
-        <mat-form-field floatLabel="always" style="flex-basis: 70%;">
-            <mat-label>Price</mat-label>
-            <input formControlName="price" required matInput type="number" step="100" placeholder="0">
-            <span matTextPrefix>$&nbsp;</span>
-        </mat-form-field>
-        <mat-form-field floatLabel="always" style="flex-basis: 30%;">
-            <mat-label>Discount</mat-label>
-            <input formControlName="discount" matInput type="number" step="5" placeholder="0">
-            <span matTextPrefix>%&nbsp;</span>
-        </mat-form-field>
-    </div>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="categoryId">
-            @for (i of categories; track i.id) {
-            <mat-option [value]="i.id">
-                {{i.name}}
-            </mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea formControlName="description" matInput></textarea>
-    </mat-form-field>
-
-    <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
-
-    <div class="buttons-block">
-        <button (click)="onCancel()" type="button" mat-raised-button>Cancel</button>
-        <button type="submit" mat-raised-button color="accent">Edit</button>
-    </div>
-</form>
+    </ng-container>
+</app-product-form>

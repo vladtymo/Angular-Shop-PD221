@@ -1,81 +1,17 @@
-<h1>
-    <button (click)="back()" mat-icon-button aria-label="Example icon button with a menu icon">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Create New Product</span>
-</h1>
-<form [formGroup]="form" (ngSubmit)="submit()">
-    <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input formControlName="name" required matInput placeholder="Enter product name">
-        @if (form.controls.name.invalid) {
-        <mat-error>Invalid title text.</mat-error>
-        }
-    </mat-form-field>
+<app-product-form (onSubmit)="create($event)">
+    <ng-container title>
+        Add New Product
+    </ng-container>
+    <ng-container submitText>
+        Add
+    </ng-container>
+    <ng-container addImageButton>
 
-    <div class="col-2">
-        <mat-form-field floatLabel="always" style="flex-basis: 70%;">
-            <mat-label>Price</mat-label>
-            <input formControlName="price" required matInput type="number" step="100" placeholder="0">
-            <span matTextPrefix>$&nbsp;</span>
-            @if (form.controls.price.invalid) {
-            <mat-error>Invalid price value.</mat-error>
-            }
-        </mat-form-field>
-        <mat-form-field floatLabel="always" style="flex-basis: 30%;">
-            <mat-label>Discount</mat-label>
-            <input formControlName="discount" matInput type="number" step="5" placeholder="0">
-            <span matTextPrefix>%&nbsp;</span>
-            @if (form.controls.discount.invalid) {
-            <mat-error>Invalid discount value.</mat-error>
-            }
-        </mat-form-field>
-    </div>
-
-    <!-- <mat-form-field>
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="categoryId" required>
-            <mat-option value="1">Electronics</mat-option>
-            <mat-option value="2">Sport</mat-option>
-            <mat-option value="3">Fashion</mat-option>
-            <mat-option value="4">Home & Garden</mat-option>
-        </mat-select>
-    </mat-form-field> -->
-
-    <mat-form-field appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select formControlName="categoryId">
-            @for (i of categories; track i.id) {
-            <mat-option [value]="i.id">
-                {{i.name}}
-            </mat-option>
-            }
-        </mat-select>
-        @if (form.controls.categoryId.invalid) {
-        <mat-error>Invalid category value.</mat-error>
-        }
-    </mat-form-field>
-
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea formControlName="description" matInput></textarea>
-        @if (form.controls.description.invalid) {
-        <mat-error>Invalid description text.</mat-error>
-        }
-    </mat-form-field>
-
-    <div>
         <button color="primary" type="button" mat-raised-button (click)="fileInput.click()">
             <mat-icon aria-hidden="false" fontIcon="image"></mat-icon>
             <span>Choose Image</span>
         </button>
         <input hidden (change)="onImagePicked($event)" #fileInput type="file" id="file">
-    </div>
 
-    <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
-
-    <div class="buttons-block">
-        <button type="reset" mat-raised-button>Cancel</button>
-        <button type="submit" mat-raised-button color="accent">Create</button>
-    </div>
-</form>
+    </ng-container>
+</app-product-form>

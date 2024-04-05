@@ -10,10 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { CategoryModel, CreateProductModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 import { Location } from '@angular/common';
+import { ProductFormComponent } from "../product-form/product-form.component";
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
+  templateUrl: './add-product.component.html',
+  styleUrl: './add-product.component.css',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -23,41 +26,22 @@ import { Location } from '@angular/common';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
-  ],
-  templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css'
+    MatButtonModule,
+    ProductFormComponent
+  ]
 })
-export class AddProductComponent implements OnInit {
+export class AddProductComponent {
 
-  form = this.fb.group({
-    name: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
-    discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
-    inStock: [false, Validators.required],
-    categoryId: [null, Validators.required],
-    description: ['', Validators.maxLength(3000)],
-    image: [null, Validators.required]
-  });
+  image: File | null = null;
 
-  categories: CategoryModel[] = [];
-
-  constructor(private fb: FormBuilder,
+  constructor(
     private service: ProductsService,
     private location: Location) { }
 
-  ngOnInit(): void {
-    this.service.getCategories().subscribe(res => this.categories = res);
-  }
+  create(data: any): void {
+    const item: CreateProductModel = data as CreateProductModel;
+    item.image = this.image;
 
-  submit(): void {
-
-    if (!this.form.valid) {
-      alert("Invalid data, please try again!");
-      return;
-    }
-
-    const item: CreateProductModel = this.form.value as CreateProductModel;
     this.service.create(item).subscribe(res => {
       console.log(res);
 
@@ -65,13 +49,13 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+  back(): void {
+    this.location.back();
+  }
+
   onImagePicked(event: any) {
     //const target = (event.target as HTMLInputElement);
     const file = event.target.files[0]; // Here we use only the first file (single file)
-    this.form.patchValue({ image: file });
-  }
-
-  back(): void {
-    this.location.back();
+    this.image = file;
   }
 }

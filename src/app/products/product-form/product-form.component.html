@@ -1,0 +1,78 @@
+<h1>
+    <button (click)="back()" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span #title>
+        <ng-content select="[title]"></ng-content>
+    </span>
+</h1>
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div #imagePreview>
+        <ng-content select="[imagePreview]"></ng-content>
+    </div>
+
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" required matInput placeholder="Enter product name">
+        @if (form.controls.name.invalid) {
+        <mat-error>Invalid title text.</mat-error>
+        }
+    </mat-form-field>
+
+    <div class="col-2">
+        <mat-form-field floatLabel="always" style="flex-basis: 70%;">
+            <mat-label>Price</mat-label>
+            <input formControlName="price" required matInput type="number" step="100" placeholder="0">
+            <span matTextPrefix>$&nbsp;</span>
+            @if (form.controls.price.invalid) {
+            <mat-error>Invalid price value.</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field floatLabel="always" style="flex-basis: 30%;">
+            <mat-label>Discount</mat-label>
+            <input formControlName="discount" matInput type="number" step="5" placeholder="0">
+            <span matTextPrefix>%&nbsp;</span>
+            @if (form.controls.discount.invalid) {
+            <mat-error>Invalid discount value.</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="categoryId">
+            @for (i of categories; track i.id) {
+            <mat-option [value]="i.id">
+                {{i.name}}
+            </mat-option>
+            }
+        </mat-select>
+        @if (form.controls.categoryId.invalid) {
+        <mat-error>Invalid category value.</mat-error>
+        }
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput></textarea>
+        @if (form.controls.description.invalid) {
+        <mat-error>Invalid description text.</mat-error>
+        }
+    </mat-form-field>
+
+    <div #addImageButton>
+        <ng-content select="[addImageButton]"></ng-content>
+    </div>
+
+    <mat-checkbox formControlName="inStock" color="primary">In Stock</mat-checkbox>
+
+    <div class="buttons-block">
+        <button type="reset" mat-raised-button>Cancel</button>
+        <button type="submit" mat-raised-button color="accent">
+            <span #submitText>
+                <ng-content select="[submitText]"></ng-content>
+            </span>
+        </button>
+    </div>
+</form>

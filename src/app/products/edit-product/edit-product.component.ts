@@ -11,11 +11,13 @@ import { CategoryModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-
+import { ProductFormComponent } from "../product-form/product-form.component";
 
 @Component({
   selector: 'app-edit-product',
   standalone: true,
+  templateUrl: './edit-product.component.html',
+  styleUrl: './edit-product.component.css',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -25,29 +27,16 @@ import { ActivatedRoute } from '@angular/router';
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    MatButtonModule
-  ],
-  templateUrl: './edit-product.component.html',
-  styleUrl: './edit-product.component.css'
+    MatButtonModule,
+    ProductFormComponent
+  ]
 })
 export class EditProductComponent implements OnInit {
-  form = this.fb.group({
-    id: [0, Validators.required],
-    name: ['', Validators.required],
-    price: [0, [Validators.required, Validators.min(0)]],
-    discount: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
-    inStock: [false, Validators.required],
-    categoryId: [0, Validators.required],
-    description: ['', Validators.maxLength(3000)],
-    imageUrl: ['', Validators.required],
-    categoryName: ['']
-  });
 
   id: number = 0;
   product: ProductModel | null = null;
-  categories: CategoryModel[] = [];
 
-  constructor(private fb: FormBuilder,
+  constructor(
     private service: ProductsService,
     private location: Location,
     private route: ActivatedRoute
@@ -56,11 +45,8 @@ export class EditProductComponent implements OnInit {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.service.getCategories().subscribe(res => this.categories = res);
-
     this.service.get(this.id).subscribe(res => {
       this.product = res;
-      this.form.setValue(this.product);
     });
   }
 
@@ -68,19 +54,13 @@ export class EditProductComponent implements OnInit {
     this.location.back();
   }
 
-  submit(): void {
+  edit(model: any): void {
+    if (!this.product) return;
 
-    if (!this.form.valid) {
-      alert("Invalid data, please try again!");
-      return;
-    }
+    const item: ProductModel = model as ProductModel;
+    item.id = this.id;
+    item.imageUrl = this.product.imageUrl;
 
-    const item: ProductModel = this.form.value as ProductModel;
     this.service.edit(item).subscribe(() => this.back());
-  }
-
-  onCancel() {
-    if (this.product)
-      this.form.setValue(this.product);
   }
 }
