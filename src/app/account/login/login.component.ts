@@ -10,9 +10,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { CategoryModel, ProductModel } from '../../services/products';
 import { ProductsService } from '../../services/products.service';
 import { Location } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoginModel, RegisterModel } from '../account';
 import { AccountsService } from '../../services/accounts.service';
+import { TokenService } from '../../services/token.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +39,10 @@ export class LoginComponent {
   form: FormGroup;
 
   constructor(fb: FormBuilder,
-    private service: AccountsService) {
+    private service: AccountsService,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+    private tokenService: TokenService) {
     this.form = fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -58,8 +63,18 @@ export class LoginComponent {
     this.service.login(model).subscribe(res => {
       console.log(res);
 
-      // TODO: navigate to home page
+      this.tokenService.saveToken(res.accessToken, res.refreshToken);
+      this.router.navigate(['/']);
+
+      this.openSnackBar("You have logged in successfully!", 3)
     });
   }
 
+  openSnackBar(message: string, durationInM: number) {
+    this._snackBar.open(message, undefined, {
+      duration: durationInM * 1000,
+      // TODO: change snackbar styling
+      //panelClass: ['mat-toolbar', 'mat-accent']
+    });
+  }
 }
